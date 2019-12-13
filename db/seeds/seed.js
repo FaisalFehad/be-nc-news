@@ -1,15 +1,20 @@
 const { topics, articles, comments, users } = require("../data/index");
 const { formatDates, formatComments, makeRefObj } = require("../utils/utils");
 
-console.log(articles);
-
 exports.seed = function(knex) {
   const topicsInsertions = knex("topics").insert(topics);
   const usersInsertions = knex("users").insert(users);
 
-  return Promise.all([topicsInsertions, usersInsertions])
-    .then(() => {
-      /* 
+  return Promise.all([topicsInsertions, usersInsertions]).then(() => {
+    const newArticles = formatDates(articles);
+    return knex
+      .insert(newArticles)
+      .into("articles")
+      .returning("*")
+      .then(data => {
+        console.log(data[0]);
+      });
+    /* 
       
       Your article data is currently in the incorrect format and will violate your SQL schema. 
       
@@ -17,9 +22,9 @@ exports.seed = function(knex) {
 
       Your comment insertions will depend on information from the seeded articles, so make sure to return the data after it's been seeded.
       */
-    })
-    .then(articleRows => {
-      /* 
+  });
+  // .then(articleRows => {
+  /* 
 
       Your comment data is currently in the incorrect format and will violate your SQL schema. 
 
@@ -28,8 +33,8 @@ exports.seed = function(knex) {
       You will need to write and test the provided makeRefObj and formatComments utility functions to be able insert your comment data.
       */
 
-      const articleRef = makeRefObj(articleRows);
-      const formattedComments = formatComments(comments, articleRef);
-      return knex("comments").insert(formattedComments);
-    });
+  //   const articleRef = makeRefObj(articleRows);
+  //   const formattedComments = formatComments(comments, articleRef);
+  //   return knex("comments").insert(formattedComments);
+  // });
 };
