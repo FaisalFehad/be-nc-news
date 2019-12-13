@@ -5,7 +5,7 @@ const {
   formatComments
 } = require("../db/utils/utils");
 
-describe.only("formatDates", () => {
+describe("formatDates", () => {
   it("returns an empty array when passed an empty array ", () => {
     expect(formatDates([])).to.be.an("array");
   });
@@ -116,6 +116,24 @@ describe.only("formatDates", () => {
   });
 });
 
-describe("makeRefObj", () => {});
+describe.only("makeRefObj", () => {
+  it("returns an empty object when passed an empty array", () => {
+    expect(makeRefObj([])).to.deep.equal({});
+  });
+
+  it("creates a reference object when passed an array of objects", () => {
+    const data = [{ article_id: 1, title: "A" }];
+    const expected = { A: 1 };
+    expect(makeRefObj(data)).to.deep.equal({ A: 1 });
+  });
+
+  it("does not mutate the original array", () => {
+    const data = [{ article_id: 1, title: "A" }];
+    const copyData = [{ article_id: 1, title: "A" }];
+    const expected = { A: 1 };
+    makeRefObj(data);
+    expect(data).to.equal(data);
+  });
+});
 
 describe("formatComments", () => {});
