@@ -64,10 +64,30 @@ describe.only("formatDates", () => {
   });
 
   it("dose not mutate the original array", () => {
-    const originalArr = [];
+    const originalArr = [
+      {
+        title:
+          "The Rise Of Thinking Machines: How IBM's Watson Takes On The World",
+        topic: "coding",
+        author: "jessjelly",
+        body: "Many people know...",
+        created_at: 1500584273256
+      }
+    ];
+
+    const originalArr2 = [
+      {
+        title:
+          "The Rise Of Thinking Machines: How IBM's Watson Takes On The World",
+        topic: "coding",
+        author: "jessjelly",
+        body: "Many people know...",
+        created_at: 1500584273256
+      }
+    ];
     const actual = formatDates(originalArr);
     expect(actual).to.not.equal(originalArr);
-    expect(actual).to.deep.equal(originalArr);
+    expect(originalArr).to.deep.equal(originalArr2);
   });
 
   it("dose not mutate the objects", () => {
@@ -80,8 +100,19 @@ describe.only("formatDates", () => {
         created_at: 1471522072389
       }
     ];
+
+    const arrOfObj2 = [
+      {
+        title: "Running a Node App",
+        topic: "coding",
+        author: "jessjelly",
+        body: "This is part two of a series....",
+        created_at: 1471522072389
+      }
+    ];
+
     const actual = formatDates(arrOfObj);
-    expect(actual[0]).to.not.equal(arrOfObj[0]);
+    expect(arrOfObj[0]).to.deep.equal(arrOfObj2[0]);
   });
 });
 
