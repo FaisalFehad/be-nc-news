@@ -1,6 +1,8 @@
 const { topics, articles, comments, users } = require("../data/index");
 const { formatDates, formatComments, makeRefObj } = require("../utils/utils");
 
+console.log(articles);
+
 exports.seed = function(knex) {
   const topicsInsertions = knex("topics").insert(topics);
   const usersInsertions = knex("users").insert(users);
