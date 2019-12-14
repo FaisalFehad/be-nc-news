@@ -1,7 +1,7 @@
 process.env.NODE_ENV = "test";
 
 const app = require("../app");
-const request = require("supertest");
+const request = require("supertest")(app);
 const chai = require("chai");
 const { expect } = chai;
 const connection = require("../db/connection");
@@ -16,7 +16,14 @@ after(() => {
 
 describe("nc-news", () => {
   describe("/api", () => {
-    describe("Invalid requests", () => {});
+    describe("Invalid requests", () => {
+      return request
+        .get("/not-a-path")
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).to.equal("Not found");
+        });
+    });
     describe("/topics", () => {
       describe("GET", () => {});
     });
