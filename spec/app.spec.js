@@ -13,3 +13,37 @@ beforeEach(() => {
 after(() => {
   connection.destroy();
 });
+
+describe("nc-news", () => {
+  describe("/api", () => {
+    describe("Invalid requests", () => {});
+    describe("/topics", () => {
+      describe("GET", () => {});
+    });
+    describe("/articles", () => {
+      describe("GET", () => {
+        describe("/article_id", () => {});
+      });
+      describe("PATCH", () => {
+        describe("/article_id", () => {});
+      });
+    });
+    describe("POST", () => {
+      describe(":article_id/comments", () => {});
+    });
+    describe("GET", () => {
+      describe(":article_id/comments", () => {});
+    });
+    describe("GET", () => {
+      describe("/", () => {});
+    });
+  });
+  describe("/comments", () => {
+    describe("PATCH", () => {
+      describe("/:comment_id", () => {});
+    });
+    describe("DELETE", () => {
+      describe("/:comment_id", () => {});
+    });
+  });
+});
