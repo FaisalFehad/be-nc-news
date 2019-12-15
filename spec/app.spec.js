@@ -39,6 +39,28 @@ describe("nc-news", () => {
         });
       });
     });
+    describe("/users", () => {
+      describe("GET", () => {
+        describe("/:username", () => {
+          it("STATUS 200: sends the requested user object with username, avatar_url and name properties", () => {
+            return request
+              .get("/api/users/butter_bridge")
+              .expect(200)
+              .then(({ body: { user } }) => {
+                expect(user).to.have.all.keys("username", "avatar_url", "name");
+              });
+          });
+        });
+        describe("/:username", () => {
+          it("STATUS 402: sends an object with The user is not found message when requested a use that dose not exist", () => {
+            return request.get("/api/users/not-user-name").expect(204);
+            // .then(({ body: { msg } }) => {
+            //   expect(msg).to.equal("The user is not found");
+            // });
+          });
+        });
+      });
+    });
     describe("/articles", () => {
       describe("GET", () => {
         describe("/article_id", () => {});
