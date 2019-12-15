@@ -27,7 +27,17 @@ describe("nc-news", () => {
       });
     });
     describe("/topics", () => {
-      describe("GET", () => {});
+      describe("GET", () => {
+        it("STATUS 200: sends an array of topic objects, each containing a slug and description", () => {
+          return request
+            .get("/api/topics")
+            .expect(200)
+            .then(({ body: { topics } }) => {
+              expect(topics).to.be.an("array");
+              expect(topics[0]).to.have.all.keys("slug", "description");
+            });
+        });
+      });
     });
     describe("/articles", () => {
       describe("GET", () => {
