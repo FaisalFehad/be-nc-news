@@ -17,12 +17,14 @@ after(() => {
 describe("nc-news", () => {
   describe("/api", () => {
     describe("Invalid requests", () => {
-      return request
-        .get("/not-a-path")
-        .expect(404)
-        .then(({ body: { msg } }) => {
-          expect(msg).to.equal("Not found");
-        });
+      it("STATUS 404: sends Not found when requested an invalid path", () => {
+        return request
+          .get("/not-a-path")
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Not found");
+          });
+      });
     });
     describe("/topics", () => {
       describe("GET", () => {});
