@@ -136,7 +136,28 @@ describe("nc-news", () => {
       });
     });
     describe("POST", () => {
-      describe(":article_id/comments", () => {});
+      describe(":article_id/comments", () => {
+        it.only("STATUS 201: creates article comments by article id", () => {
+          return request
+            .post("/api/articles/1/comments")
+            .send({ username: "butter_bridge", body: "test comment" })
+            .expect(201)
+            .then(({ body: { postedComment } }) => {
+              expect(postedComment).to.have.keys(
+                "comment_id",
+                "author",
+                "article_id",
+                "votes",
+                "created_at",
+                "body"
+              );
+              expect(postedComment.comment_id).to.equal(19);
+              expect(postedComment.author).to.equal("butter_bridge");
+              expect(postedComment.article_id).to.equal(1);
+              expect(postedComment.body).to.equal("test comment");
+            });
+        });
+      });
     });
     describe("GET", () => {
       describe(":article_id/comments", () => {});
@@ -150,7 +171,11 @@ describe("nc-news", () => {
       describe("/:comment_id", () => {});
     });
     describe("DELETE", () => {
-      describe("/:comment_id", () => {});
+      describe("/:comment_id", () => {
+        it("STATUS 204: Deletes comment by comment_id ", () => {
+          // return request.del("/api/comments/1").expect(204);
+        });
+      });
     });
   });
 });
