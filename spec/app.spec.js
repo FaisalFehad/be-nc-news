@@ -54,10 +54,10 @@ describe("nc-news", () => {
         describe("/:username", () => {
           it("STATUS 404: sends an object with The user is not found message when requested a use that dose not exist", () => {
             return request
-              .get("/api/users/not-user-name")
+              .get("/api/users/0")
               .expect(404)
               .then(({ body: { msg } }) => {
-                expect(msg).to.equal("Article not found");
+                expect(msg).to.equal("User not found");
               });
           });
         });
