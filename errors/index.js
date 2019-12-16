@@ -9,6 +9,12 @@ exports.handle400 = (err, req, res, next) => {
   else next(err);
 };
 
+exports.handle422 = (err, req, res, next) => {
+  if (err.code === "23503")
+    res.status(422).send({ msg: "Unprocessable Entity" });
+  else next(err);
+};
+
 exports.handle404 = (req, res, next) => {
   res.status(404).send({ msg: "Not found" });
 };

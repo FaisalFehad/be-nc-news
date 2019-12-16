@@ -135,8 +135,8 @@ describe("nc-news", () => {
         });
       });
     });
-    describe("POST", () => {
-      describe(":article_id/comments", () => {
+    describe(":article_id/comments", () => {
+      describe("POST", () => {
         it("STATUS 201: creates article comments by article id", () => {
           return request
             .post("/api/articles/1/comments")
@@ -157,6 +157,15 @@ describe("nc-news", () => {
               expect(postedComment.body).to.equal("test comment");
             });
         });
+        it("STATUS 422: sends bad request when article_id", () => {
+          return request
+            .post("/api/articles/999/comments")
+            .send({ username: "butter_bridge", body: "test comment" })
+            .expect(422)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Unprocessable Entity");
+            });
+        });
       });
     });
     describe("GET", () => {
@@ -165,15 +174,15 @@ describe("nc-news", () => {
     describe("GET", () => {
       describe("/", () => {});
     });
-  });
-  describe("/comments", () => {
-    describe("PATCH", () => {
-      describe("/:comment_id", () => {});
-    });
-    describe("DELETE", () => {
-      describe("/:comment_id", () => {
-        it("STATUS 204: Deletes comment by comment_id ", () => {
-          // return request.del("/api/comments/1").expect(204);
+    describe("/comments", () => {
+      describe("PATCH", () => {
+        describe("/:comment_id", () => {});
+      });
+      describe("DELETE", () => {
+        describe("/:comment_id", () => {
+          it("STATUS 204: Deletes comment by comment_id ", () => {
+            // return request.del("/api/comments/1").expect(204);
+          });
         });
       });
     });

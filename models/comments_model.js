@@ -11,6 +11,6 @@ exports.saveArticleComment = (article_id, comment) => {
     .into("comments")
     .returning("*")
     .then(postedCommentArr => {
-      return postedCommentArr[0];
+      if (postedCommentArr) return postedCommentArr[0];
     });
 };
