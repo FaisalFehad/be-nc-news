@@ -117,13 +117,23 @@ describe("nc-news", () => {
               });
           });
 
-          it("STATUS 404: invalid request when the article dose not exist ", () => {
+          it("STATUS 404: sends article not found message ", () => {
             return request
               .patch("/api/articles/999")
               .send({ inc_votes: 6 })
               .expect(404)
               .then(({ body: { msg } }) => {
                 expect(msg).to.equal("Article is not found");
+              });
+          });
+
+          it("STATUS 400: sends bad request when invalid article_id", () => {
+            return request
+              .patch("/api/articles/one")
+              .send({ inc_votes: 6 })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
               });
           });
         });
