@@ -17,7 +17,14 @@ exports.updateArticleVotes = (article_id, votesUpdate) => {
     .from("articles")
     .where("articles.article_id", "=", article_id)
     .then(([article]) => {
-      article.votes += votesUpdate;
-      return article;
+      if (article) {
+        article.votes += votesUpdate;
+        return article;
+      } else {
+        return Promise.reject({
+          status: 404,
+          msg: "Article is not found"
+        });
+      }
     });
 };

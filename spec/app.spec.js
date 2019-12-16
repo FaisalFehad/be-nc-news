@@ -115,8 +115,16 @@ describe("nc-news", () => {
                 expect(updatedArticle.author).to.equal("butter_bridge");
                 expect(updatedArticle.topic).to.equal("mitch");
               });
+          });
 
-            // });
+          it("STATUS 404: invalid request when the article dose not exist ", () => {
+            return request
+              .patch("/api/articles/999")
+              .send({ inc_votes: 6 })
+              .expect(404)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Article is not found");
+              });
           });
         });
       });
