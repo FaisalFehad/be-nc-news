@@ -5,6 +5,7 @@ const request = require("supertest")(app);
 const chai = require("chai");
 const { expect } = chai;
 const connection = require("../db/connection");
+chai.use(require("chai-sorted"));
 
 beforeEach(() => {
   return connection.seed.run();
@@ -219,7 +220,7 @@ describe("nc-news", () => {
     });
     describe(":article_id/comments", () => {
       describe("GET", () => {
-        it("STATUS 200: responds with array of comments on the given article_id", () => {
+        it("STATUS 200: responds with array of comments on the given article_id, sorted by created_at by default", () => {
           return request
             .get("/api/articles/1/comments")
             .expect(200)
@@ -232,6 +233,7 @@ describe("nc-news", () => {
                 "username",
                 "body"
               );
+              expect(body).to.descendingBy("created_at");
             });
         });
       });
