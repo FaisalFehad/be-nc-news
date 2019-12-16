@@ -137,7 +137,7 @@ describe("nc-news", () => {
     });
     describe("POST", () => {
       describe(":article_id/comments", () => {
-        it.only("STATUS 201: creates article comments by article id", () => {
+        it("STATUS 201: creates article comments by article id", () => {
           return request
             .post("/api/articles/1/comments")
             .send({ username: "butter_bridge", body: "test comment" })
