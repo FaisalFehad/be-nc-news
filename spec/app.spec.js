@@ -114,7 +114,6 @@ describe("nc-news", () => {
                 expect(updatedArticle.topic).to.equal("mitch");
               });
           });
-
           it("STATUS 404: sends article not found message ", () => {
             return request
               .patch("/api/articles/999")
@@ -124,7 +123,6 @@ describe("nc-news", () => {
                 expect(msg).to.equal("Article is not found");
               });
           });
-
           it("STATUS 400: sends bad request when invalid article_id", () => {
             return request
               .patch("/api/articles/one")
