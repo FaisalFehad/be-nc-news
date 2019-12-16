@@ -2,6 +2,7 @@ const {
   fetchArticleById,
   updateArticleVotes
 } = require("../models/articles_model");
+const { fetchCommentsByArticleId } = require("../models/comments-model");
 
 exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
@@ -19,6 +20,16 @@ exports.changeArticleVotes = (req, res, next) => {
   updateArticleVotes(article_id, inc_votes)
     .then(updatedArticle => {
       res.status(201).send({ updatedArticle });
+    })
+    .catch(next);
+};
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  const { article_id } = req.params;
+
+  fetchCommentsByArticleId(article_id)
+    .then(comments => {
+      res.status(200).send(comments);
     })
     .catch(next);
 };

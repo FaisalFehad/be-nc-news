@@ -1,4 +1,4 @@
-const { saveArticleComment } = require("../models/comments_model");
+const { saveArticleComment } = require("../models/comments-model");
 
 exports.createArticleComment = (req, res, next) => {
   const { article_id } = req.params;

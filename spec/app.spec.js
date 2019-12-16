@@ -210,7 +210,6 @@ describe("nc-news", () => {
               body: "test comment",
               admin: "meee"
             })
-
             .expect(400)
             .then(({ body: { msg } }) => {
               expect(msg).to.equal("Bad request");
@@ -218,8 +217,24 @@ describe("nc-news", () => {
         });
       });
     });
-    describe("GET", () => {
-      describe(":article_id/comments", () => {});
+    describe(":article_id/comments", () => {
+      describe("GET", () => {
+        it("STATUS 200: responds with array of comments on the given article_id", () => {
+          return request
+            .get("/api/articles/1/comments")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body).to.be.an("array");
+              expect(body[0]).to.have.all.keys(
+                "comment_id",
+                "votes",
+                "created_at",
+                "username",
+                "body"
+              );
+            });
+        });
+      });
     });
     describe("GET", () => {
       describe("/", () => {});
