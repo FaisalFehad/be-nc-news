@@ -10,3 +10,14 @@ exports.fetchArticleById = article_id => {
     .leftJoin("comments", "comments.article_id", "=", "articles.article_id")
     .groupBy("articles.article_id");
 };
+
+exports.updateArticleVotes = (article_id, votesUpdate) => {
+  return connection
+    .select("articles.*")
+    .from("articles")
+    .where("articles.article_id", "=", article_id)
+    .then(([article]) => {
+      article.votes += votesUpdate;
+      return article;
+    });
+};

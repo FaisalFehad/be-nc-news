@@ -94,7 +94,31 @@ describe("nc-news", () => {
         });
       });
       describe("PATCH", () => {
-        describe("/article_id", () => {});
+        describe("/article_id", () => {
+          it("STATUS 200: receives an object of inc_votes, updates the comments count and sends the updated article ", () => {
+            return request
+              .patch("/api/articles/1")
+              .send({ inc_votes: 6 })
+              .expect(201)
+              .then(({ body: { updatedArticle } }) => {
+                expect(updatedArticle).to.have.keys(
+                  "article_id",
+                  "title",
+                  "body",
+                  "topic",
+                  "votes",
+                  "author",
+                  "created_at"
+                );
+                expect(updatedArticle.article_id).to.equal(1);
+                expect(updatedArticle.votes).to.equal(106);
+                expect(updatedArticle.author).to.equal("butter_bridge");
+                expect(updatedArticle.topic).to.equal("mitch");
+              });
+
+            // });
+          });
+        });
       });
     });
     describe("POST", () => {
