@@ -7,6 +7,9 @@ exports.fetchUserByUsername = username => {
     .from("users")
     .where({ username })
     .then(userArr => {
-      return userArr[0];
+      if (userArr[0]) return userArr[0];
+      else {
+        return Promise.reject({ status: 404, msg: "Article not found" });
+      }
     });
 };
