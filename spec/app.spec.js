@@ -91,8 +91,8 @@ describe("nc-news", () => {
             });
         });
       });
-      describe("PATCH", () => {
-        describe("/article_id", () => {
+      describe("/article_id", () => {
+        describe("PATCH", () => {
           it("STATUS 200: receives an object of inc_votes, updates the comments count and sends the updated article ", () => {
             return request
               .patch("/api/articles/1")
