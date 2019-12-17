@@ -259,6 +259,16 @@ describe("nc-news", () => {
               });
           });
         });
+        it("STATUS 405: responds with msg method not allowed", () => {
+          const invalidMethods = ["delete", "put"];
+          invalidMethods.map(method => {
+            return request[method]("/api/articles/1/comments")
+              .expect(405)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Method Not Allowed");
+              });
+          });
+        });
         describe("Queries:", () => {
           describe("sort_by query:", () => {
             describe("comments are sorted by their created_at in  descending order)", () => {

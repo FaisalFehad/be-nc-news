@@ -5,7 +5,8 @@ const {
   handle404,
   handleCustoms,
   handle400,
-  handle422
+  handle422,
+  handle405
 } = require("./errors/index");
 
 app.use(express.json());
