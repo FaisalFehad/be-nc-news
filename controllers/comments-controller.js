@@ -1,6 +1,7 @@
 const {
   saveArticleComment,
-  changeCommentVote
+  changeCommentVote,
+  removeComment
 } = require("../models/comments-model");
 
 exports.createArticleComment = (req, res, next) => {
@@ -21,6 +22,20 @@ exports.updateCommentVote = (req, res, next) => {
   changeCommentVote(comment_id, newVote)
     .then(updatedComment => {
       res.status(201).send({ updatedComment });
+    })
+    .catch(next);
+};
+
+exports.deleteComment = (req, res, next) => {
+  const { comment_id } = req.params;
+  removeComment(comment_id)
+    .then(deleted_count => {
+      if (deleted_count === 1) res.sendStatus(204);
+      else
+        return Promise.reject({
+          status: 404,
+          msg: "Comment Not Found"
+        });
     })
     .catch(next);
 };

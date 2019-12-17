@@ -427,7 +427,25 @@ describe("nc-news", () => {
       describe("DELETE", () => {
         describe("/:comment_id", () => {
           it("STATUS 204: Deletes comment by comment_id ", () => {
-            // return request.del("/api/comments/1").expect(204);
+            return request.del("/api/comments/1").expect(204);
+          });
+          describe("ERRORS", () => {
+            it("STATUS 404: responds with Comment Not Found invalid comment_id  ", () => {
+              return request
+                .del("/api/comments/999")
+                .expect(404)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Comment Not Found");
+                });
+            });
+            it("STATUS 400: responds with Bad request error to invalid comment_id", () => {
+              return request
+                .del("/api/comments/babyShark")
+                .expect(400)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Bad request");
+                });
+            });
           });
         });
       });

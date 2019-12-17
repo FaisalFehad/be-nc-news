@@ -1,8 +1,14 @@
 const commentsRouter = require("express").Router();
-const { getTopics } = require("../controllers/topics-controller");
 const { handle405 } = require("../errors/index");
-const { updateCommentVote } = require("../controllers/comments-controller");
+const {
+  updateCommentVote,
+  deleteComment
+} = require("../controllers/comments-controller");
 
-commentsRouter.route("/:comment_id").patch(updateCommentVote);
+commentsRouter
+  .route("/:comment_id")
+  .patch(updateCommentVote)
+  .delete(deleteComment)
+  .all(handle405);
 
 module.exports = commentsRouter;

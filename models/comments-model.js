@@ -28,7 +28,6 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
     .then(comments => {
       if (comments.length) return comments;
       else return Promise.reject({ status: 404, msg: "Article not found" });
-      console.log(comments);
     });
 };
 
@@ -49,5 +48,15 @@ exports.changeCommentVote = (comment_id, newVote) => {
             return updatedComment[0];
           });
       } else return Promise.reject({ status: 404, msg: "Comment Not Found" });
+    });
+};
+
+exports.removeComment = comment_id => {
+  return connection
+    .from("comments")
+    .where({ comment_id })
+    .del()
+    .then(deleted_comment => {
+      return deleted_comment;
     });
 };
