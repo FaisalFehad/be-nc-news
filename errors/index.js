@@ -15,14 +15,19 @@ exports.handle422 = (err, req, res, next) => {
   else next(err);
 };
 
+exports.handle500s = (err, req, res, next) => {
+  console.log(err);
+  res.status(500).send({ msg: "server error" });
+};
+
 exports.handle402 = (req, res, next) => {
   res.status(402).send({ msg: "No Content" });
 };
 
-exports.handle404 = (req, res, next) => {
-  res.status(404).send({ msg: "Not found" });
-};
-
 exports.handle405 = (req, res, next) => {
   res.status(405).send({ msg: "Method Not Allowed" });
+};
+
+exports.handle404 = (req, res, next) => {
+  res.status(404).send({ msg: "Not found" });
 };
