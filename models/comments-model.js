@@ -24,5 +24,10 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
     .select("comment_id", "votes", "created_at", "body", "author as username")
     .from("comments")
     .where({ article_id })
-    .orderBy(query.sort_by, query.order);
+    .orderBy(query.sort_by, query.order)
+    .then(comments => {
+      if (comments.length) return comments;
+      else return Promise.reject({ status: 404, msg: "Article not found" });
+      console.log(comments);
+    });
 };

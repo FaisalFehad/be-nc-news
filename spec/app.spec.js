@@ -249,6 +249,16 @@ describe("nc-news", () => {
               );
             });
         });
+        describe("Invalid requests", () => {
+          it("STATUS 404: responds with article not found", () => {
+            return request
+              .get("/api/articles/999/comments")
+              .expect(404)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Article not found");
+              });
+          });
+        });
         describe("Queries:", () => {
           describe("sort_by query:", () => {
             describe("comments are sorted by their created_at in  descending order)", () => {
