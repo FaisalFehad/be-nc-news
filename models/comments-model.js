@@ -15,12 +15,14 @@ exports.saveArticleComment = (article_id, comment) => {
     });
 };
 
-exports.fetchCommentsByArticleId = article_id => {
+exports.fetchCommentsByArticleId = (article_id, query) => {
+  // set default values
+  if (!query.sort_by) sort_by = query.sort_by = "created_at";
+  if (!query.order) order = query.order = "desc";
+
   return connection
     .select("comment_id", "votes", "created_at", "body", "author as username")
     .from("comments")
     .where({ article_id })
-    .then(comments => {
-      return comments;
-    });
+    .orderBy(query.sort_by, query.order);
 };

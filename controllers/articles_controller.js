@@ -26,8 +26,9 @@ exports.changeArticleVotes = (req, res, next) => {
 
 exports.getCommentsByArticleId = (req, res, next) => {
   const { article_id } = req.params;
+  const { query } = req;
 
-  fetchCommentsByArticleId(article_id)
+  fetchCommentsByArticleId(article_id, query)
     .then(comments => {
       res.status(200).send(comments);
     })

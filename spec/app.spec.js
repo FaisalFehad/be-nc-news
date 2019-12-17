@@ -220,7 +220,7 @@ describe("nc-news", () => {
     });
     describe(":article_id/comments", () => {
       describe("GET", () => {
-        it("STATUS 200: responds with array of comments on the given article_id, sorted by created_at by default", () => {
+        it("STATUS 200: responds with array of comments", () => {
           return request
             .get("/api/articles/1/comments")
             .expect(200)
@@ -233,8 +233,71 @@ describe("nc-news", () => {
                 "username",
                 "body"
               );
-              expect(body).to.descendingBy("created_at");
             });
+        });
+        it("STATUS 200: each item of the array contains comment object", () => {
+          return request
+            .get("/api/articles/1/comments")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body[0]).to.have.all.keys(
+                "comment_id",
+                "votes",
+                "created_at",
+                "username",
+                "body"
+              );
+            });
+        });
+        describe("Queries:", () => {
+          describe("sort_by query:", () => {
+            describe("comments are sorted by their created_at in  descending order)", () => {
+              it("STATUS 200: comments are sorted by votes when passed votes in sort_by query", () => {
+                return request
+                  .get("/api/articles/1/comments?sort_by=votes")
+                  .expect(200)
+                  .then(({ body }) => {
+                    expect(body).to.be.descendingBy("votes");
+                  });
+              });
+              it("STATUS 200: comments are sorted by votes when passed votes in sort_by query", () => {
+                return request
+                  .get("/api/articles/1/comments?sort_by=votes")
+                  .expect(200)
+                  .then(({ body }) => {
+                    expect(body).to.be.descendingBy("votes");
+                  });
+              });
+              it("STATUS 200: comments are sorted by comment_id when passed comment_id in sort_by query", () => {
+                return request
+                  .get("/api/articles/1/comments?sort_by=comment_id")
+                  .expect(200)
+                  .then(({ body }) => {
+                    expect(body).to.be.descendingBy("comment_id");
+                  });
+              });
+            });
+          });
+          describe("Order query:", () => {
+            describe("can be set to asc or desc for ascending or descending (defaults to descending)", () => {
+              it("STATUS 200: By default, it responds with array of comments sorted by comment_id query", () => {
+                return request
+                  .get("/api/articles/1/comments")
+                  .expect(200)
+                  .then(({ body }) => {
+                    expect(body).to.be.descendingBy("created_at");
+                  });
+              });
+              it("STATUS 200: sends an array of comments sorted in ascending order when passed asc in order query", () => {
+                return request
+                  .get("/api/articles/1/comments?order=acs")
+                  .expect(200)
+                  .then(({ body }) => {
+                    expect(body).to.be.ascendingBy("created_at");
+                  });
+              });
+            });
+          });
         });
       });
     });
