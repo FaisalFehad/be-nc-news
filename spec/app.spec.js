@@ -358,7 +358,71 @@ describe("nc-news", () => {
     });
     describe("/comments", () => {
       describe("PATCH", () => {
-        describe("/:comment_id", () => {});
+        describe("/:comment_id", () => {
+          it("STATUS 201: takes a body object as { inc_votes: newVote } to update votes property ", () => {
+            return request
+              .patch("/api/comments/1")
+              .send({ inc_votes: 2 })
+              .expect(201)
+              .then(({ body: { updatedComment } }) => {
+                expect(updatedComment.votes).to.equal(18);
+              });
+          });
+          it("STATUS 201: sends an object with the updated comment ", () => {
+            return request
+              .patch("/api/comments/1")
+              .send({ inc_votes: 3 })
+              .expect(201)
+              .then(({ body: { updatedComment } }) => {
+                expect(updatedComment).to.have.all.keys(
+                  "comment_id",
+                  "author",
+                  "article_id",
+                  "votes",
+                  "created_at",
+                  "body"
+                );
+              });
+          });
+          describe("ERRORS:", () => {
+            it("404: responds with Comment not found when the comment", () => {
+              return request
+                .patch("/api/comments/999")
+                .send({ inc_votes: 3 })
+                .expect(404)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Comment Not Found");
+                });
+            });
+            it("400: responds with bad request when the body object is miss formated", () => {
+              return request
+                .patch("/api/comments/1")
+                .send({ inc_votes: "should be a number" })
+                .expect(400)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Bad request");
+                });
+            });
+            it("400: responds with bad request body object is missing", () => {
+              return request
+                .patch("/api/comments/1")
+                .expect(400)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Bad request");
+                });
+            });
+            it("405: responds with Method Not Allowed to invalid requests", () => {
+              const invalidMethods = ["put", "delete", "patch"];
+              const methodPromises = invalidMethods.map(method => {
+                return request[method]("/api/articles/1/comments")
+                  .expect(405)
+                  .then(({ body: { msg } }) => {
+                    expect(msg).to.equal("Method Not Allowed");
+                  });
+              });
+            });
+          });
+        });
       });
       describe("DELETE", () => {
         describe("/:comment_id", () => {

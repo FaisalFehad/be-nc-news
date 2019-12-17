@@ -31,3 +31,23 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
       console.log(comments);
     });
 };
+
+exports.changeCommentVote = (comment_id, newVote) => {
+  return connection
+    .select("*")
+    .from("comments")
+    .where({ comment_id })
+    .then(comment => {
+      if (comment.length) {
+        comment[0].votes += newVote.inc_votes;
+        return connection
+          .from("comments")
+          .update(comment[0])
+          .where({ comment_id })
+          .returning("*")
+          .then(updatedComment => {
+            return updatedComment[0];
+          });
+      } else return Promise.reject({ status: 404, msg: "Comment Not Found" });
+    });
+};
