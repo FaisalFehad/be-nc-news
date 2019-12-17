@@ -17,6 +17,11 @@ after(() => {
 
 describe("nc-news", () => {
   describe("/api", () => {
+    describe("Delete", () => {
+      it("418: responds with I'm a teapot to delete request", () => {
+        return request.delete("/api").expect(418);
+      });
+    });
     describe("Invalid requests", () => {
       it("STATUS 404: sends Not found when requested an invalid path", () => {
         return request
@@ -64,14 +69,16 @@ describe("nc-news", () => {
               });
           });
         });
-        describe("/:username", () => {
-          it("STATUS 404: sends an object with The user is not found message when requested a use that dose not exist", () => {
-            return request
-              .get("/api/users/0")
-              .expect(404)
-              .then(({ body: { msg } }) => {
-                expect(msg).to.equal("User not found");
-              });
+        describe("ERRORS", () => {
+          describe("/:username", () => {
+            it("STATUS 404: sends an object with The user is not found message when requested a use that dose not exist", () => {
+              return request
+                .get("/api/users/0")
+                .expect(404)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("User not found");
+                });
+            });
           });
         });
         it("STATUS 405: handles invalid methods", () => {
