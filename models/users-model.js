@@ -1,5 +1,4 @@
 const connection = require("../db/connection");
-const { handle402 } = require("../errors/index");
 
 exports.fetchUserByUsername = username => {
   return connection
