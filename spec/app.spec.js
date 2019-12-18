@@ -44,15 +44,17 @@ describe("nc-news", () => {
             });
         });
       });
-      describe("Invalid Methods", () => {
-        it("STATUS 405: handles invalid methods", () => {
-          const invalidMethods = ["put", "delete", "patch", "post"];
-          const methodPromises = invalidMethods.map(method => {
-            return request[method]("/api/topics")
-              .expect(405)
-              .then(({ body: { msg } }) => {
-                expect(msg).to.equal("Method Not Allowed");
-              });
+      describe("ERRORS", () => {
+        describe("Invalid Methods", () => {
+          it("STATUS 405: responds to handles invalid methods", () => {
+            const invalidMethods = ["put", "delete", "patch", "post"];
+            const methodPromises = invalidMethods.map(method => {
+              return request[method]("/api/topics")
+                .expect(405)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Method Not Allowed");
+                });
+            });
           });
         });
       });
@@ -439,8 +441,8 @@ describe("nc-news", () => {
           });
         });
       });
-      describe("DELETE", () => {
-        describe("/:comment_id", () => {
+      describe("/:comment_id", () => {
+        describe("DELETE", () => {
           it("STATUS 204: Deletes comment by comment_id ", () => {
             return request.del("/api/comments/1").expect(204);
           });
