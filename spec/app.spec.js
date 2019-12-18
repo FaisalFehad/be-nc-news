@@ -95,7 +95,7 @@ describe("nc-news", () => {
         });
       });
     });
-    describe("/articles", () => {
+    describe.only("/articles", () => {
       describe("GET", () => {
         it("STATUS 200: sends an article object with the following properties author, title, article_id, body, topic, created_at, votes, comment_count", () => {
           return request
@@ -114,13 +114,23 @@ describe("nc-news", () => {
               );
             });
         });
-        it("STATUS 404: sends 404 when requested an article that dose not exist", () => {
-          return request
-            .get("/api/articles/0")
-            .expect(404)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("The article is not found");
-            });
+        describe("ERRORS", () => {
+          it("STATUS 404: sends 404 when requested an article that dose not exist", () => {
+            return request
+              .get("/api/articles/900")
+              .expect(404)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("The article is not found");
+              });
+          });
+          it("STATUS 400: responds with bad request to invalid article id", () => {
+            return request
+              .get("/api/articles/ten")
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
         });
       });
       it("STATUS 405: handles invalid methods", () => {
