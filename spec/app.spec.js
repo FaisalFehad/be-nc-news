@@ -210,13 +210,21 @@ describe("nc-news", () => {
             });
         });
         describe("ERRORS", () => {
-          it("STATUS 422: sends Unprocessable Entity when article id is valid but dose not exist", () => {
+          it("STATUS 404: responds with article not found when the article dose not exist", () => {
             return request
-              .post("/api/articles/999/comments")
-              .send({ username: "butter_bridge", body: "test comment" })
-              .expect(422)
+              .get("/api/articles/999/comments")
+              .expect(404)
               .then(({ body: { msg } }) => {
-                expect(msg).to.equal("Unprocessable Entity");
+                expect(msg).to.equal("Article Not Found");
+              });
+          });
+          it("STATUS 400: sends bad request msg when the article_id is not valid", () => {
+            return request
+              .post("/api/articles/one/comments")
+              .send({ username: "butter_bridge", body: "test comment" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
               });
           });
           it("STATUS 400: sends bad request msg when the article_id is not valid", () => {
