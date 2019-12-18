@@ -288,13 +288,21 @@ describe("nc-news", () => {
               );
             });
         });
+        it("STATUS 200: responds with an empty array when requested an article without any comments", () => {
+          return request
+            .get("/api/articles/2/comments")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body.length).to.equal(0);
+            });
+        });
         describe("Invalid requests", () => {
           it("STATUS 404: responds with article not found", () => {
             return request
               .get("/api/articles/999/comments")
               .expect(404)
               .then(({ body: { msg } }) => {
-                expect(msg).to.equal("Article not found");
+                expect(msg).to.equal("Article Not Found");
               });
           });
         });

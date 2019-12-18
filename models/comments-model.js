@@ -26,8 +26,18 @@ exports.fetchCommentsByArticleId = (article_id, query) => {
     .where({ article_id })
     .orderBy(query.sort_by, query.order)
     .then(comments => {
-      if (comments.length) return comments;
-      else return Promise.reject({ status: 404, msg: "Article not found" });
+      return comments;
+    });
+};
+
+exports.checkArticleExistence = article_id => {
+  return connection
+    .select("*")
+    .from("articles")
+    .where({ article_id })
+    .then(([articleArr]) => {
+      if (!articleArr)
+        return Promise.reject({ status: 404, msg: "Article Not Found" });
     });
 };
 

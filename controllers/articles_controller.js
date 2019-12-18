@@ -2,7 +2,10 @@ const {
   fetchArticleById,
   updateArticleVotes
 } = require("../models/articles_model");
-const { fetchCommentsByArticleId } = require("../models/comments-model");
+const {
+  fetchCommentsByArticleId,
+  checkArticleExistence
+} = require("../models/comments-model");
 
 exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
@@ -30,8 +33,11 @@ exports.getCommentsByArticleId = (req, res, next) => {
   const { article_id } = req.params;
   const { query } = req;
 
-  fetchCommentsByArticleId(article_id, query)
-    .then(comments => {
+  Promise.all([
+    fetchCommentsByArticleId(article_id, query),
+    checkArticleExistence(article_id)
+  ])
+    .then(([comments]) => {
       res.status(200).send(comments);
     })
     .catch(next);
