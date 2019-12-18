@@ -209,63 +209,65 @@ describe("nc-news", () => {
               expect(postedComment.body).to.equal("test comment");
             });
         });
-        it("STATUS 422: sends Unprocessable Entity when article id is valid but dose not exist", () => {
-          return request
-            .post("/api/articles/999/comments")
-            .send({ username: "butter_bridge", body: "test comment" })
-            .expect(422)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("Unprocessable Entity");
-            });
-        });
-        it("STATUS 400: sends bad request msg when the article_id is not valid", () => {
-          return request
-            .post("/api/articles/one/comments")
-            .send({ username: "butter_bridge", body: "test comment" })
-            .expect(400)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("Bad request");
-            });
-        });
-        it("STATUS 400: sends bad request msg when missing the username", () => {
-          return request
-            .post("/api/articles/one/comments")
-            .send({ body: "test comment" })
-            .expect(400)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("Bad request");
-            });
-        });
-        it("STATUS 400: sends bad request msg when missing the comment body", () => {
-          return request
-            .post("/api/articles/one/comments")
-            .send({ username: "butter_bridge" })
-            .expect(400)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("Bad request");
-            });
-        });
-        it("STATUS 400: sends bad request msg when sending an empty object", () => {
-          return request
-            .post("/api/articles/one/comments")
-            .send({})
-            .expect(400)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("Bad request");
-            });
-        });
-        it("STATUS 400: sends bad request msg when an extra property that dose not exist in the db", () => {
-          return request
-            .post("/api/articles/one/comments")
-            .send({
-              username: "butter_bridge",
-              body: "test comment",
-              admin: "meee"
-            })
-            .expect(400)
-            .then(({ body: { msg } }) => {
-              expect(msg).to.equal("Bad request");
-            });
+        describe("ERRORS", () => {
+          it("STATUS 422: sends Unprocessable Entity when article id is valid but dose not exist", () => {
+            return request
+              .post("/api/articles/999/comments")
+              .send({ username: "butter_bridge", body: "test comment" })
+              .expect(422)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Unprocessable Entity");
+              });
+          });
+          it("STATUS 400: sends bad request msg when the article_id is not valid", () => {
+            return request
+              .post("/api/articles/one/comments")
+              .send({ username: "butter_bridge", body: "test comment" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
+          it("STATUS 400: sends bad request msg when missing the username", () => {
+            return request
+              .post("/api/articles/one/comments")
+              .send({ body: "test comment" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
+          it("STATUS 400: sends bad request msg when missing the comment body", () => {
+            return request
+              .post("/api/articles/one/comments")
+              .send({ username: "butter_bridge" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
+          it("STATUS 400: sends bad request msg when sending an empty object", () => {
+            return request
+              .post("/api/articles/one/comments")
+              .send({})
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
+          it("STATUS 400: sends bad request msg when an extra property that dose not exist in the db", () => {
+            return request
+              .post("/api/articles/one/comments")
+              .send({
+                username: "butter_bridge",
+                body: "test comment",
+                admin: "meee"
+              })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
         });
       });
     });
