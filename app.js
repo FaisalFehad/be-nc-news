@@ -5,7 +5,8 @@ const {
   handle404,
   handleCustoms,
   handle400,
-  handle422
+  handle422,
+  handle500
 } = require("./errors/index");
 const { teapot } = require("./controllers/api-controller");
 
@@ -17,6 +18,7 @@ apiRouter.route("/").delete(teapot);
 app.use(handleCustoms);
 app.use(handle400);
 app.use(handle422);
+app.use(handle500);
 app.use("/*", handle404);
 
 module.exports = app;
