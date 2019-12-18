@@ -1,3 +1,3 @@
 exports.teapot = (req, res, next) => {
-  res.sendStatus(418).catch(next);
+  res.sendStatus(418);
 };
