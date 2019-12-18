@@ -95,7 +95,7 @@ describe("nc-news", () => {
         });
       });
     });
-    describe.only("/articles", () => {
+    describe("/articles", () => {
       describe("GET", () => {
         it("STATUS 200: sends an article object with the following properties author, title, article_id, body, topic, created_at, votes, comment_count", () => {
           return request
@@ -433,6 +433,14 @@ describe("nc-news", () => {
             it("400: responds with bad request body object is missing", () => {
               return request
                 .patch("/api/comments/1")
+                .expect(400)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Bad request");
+                });
+            });
+            it("400: responds with bad request to invalid comment id", () => {
+              return request
+                .patch("/api/comments/six")
                 .expect(400)
                 .then(({ body: { msg } }) => {
                   expect(msg).to.equal("Bad request");
