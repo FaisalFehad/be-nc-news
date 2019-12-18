@@ -305,15 +305,15 @@ describe("nc-news", () => {
                 expect(msg).to.equal("Article Not Found");
               });
           });
-        });
-        it("STATUS 405: responds with msg method not allowed", () => {
-          const invalidMethods = ["delete", "put"];
-          invalidMethods.map(method => {
-            return request[method]("/api/articles/1/comments")
-              .expect(405)
-              .then(({ body: { msg } }) => {
-                expect(msg).to.equal("Method Not Allowed");
-              });
+          it("STATUS 405: responds with msg method not allowed", () => {
+            const invalidMethods = ["delete", "put"];
+            invalidMethods.map(method => {
+              return request[method]("/api/articles/1/comments")
+                .expect(405)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Method Not Allowed");
+                });
+            });
           });
         });
         describe("Queries:", () => {
