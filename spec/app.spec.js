@@ -150,8 +150,8 @@ describe("nc-news", () => {
               .patch("/api/articles/1")
               .send({ inc_votes: 6 })
               .expect(201)
-              .then(({ body: { updatedArticle } }) => {
-                expect(updatedArticle).to.have.keys(
+              .then(({ body: { article } }) => {
+                expect(article).to.have.keys(
                   "article_id",
                   "title",
                   "body",
@@ -160,10 +160,10 @@ describe("nc-news", () => {
                   "author",
                   "created_at"
                 );
-                expect(updatedArticle.article_id).to.equal(1);
-                expect(updatedArticle.votes).to.equal(106);
-                expect(updatedArticle.author).to.equal("butter_bridge");
-                expect(updatedArticle.topic).to.equal("mitch");
+                expect(article.article_id).to.equal(1);
+                expect(article.votes).to.equal(106);
+                expect(article.author).to.equal("butter_bridge");
+                expect(article.topic).to.equal("mitch");
               });
           });
           it("STATUS 404: sends article not found message ", () => {
