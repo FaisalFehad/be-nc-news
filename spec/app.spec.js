@@ -124,6 +124,16 @@ describe("nc-news", () => {
                 });
               });
           });
+          it("STATUS 405: handles invalid methods", () => {
+            const invalidMethods = ["put", "delete", "patch", "post"];
+            const methodPromises = invalidMethods.map(method => {
+              return request[method]("/api/articles")
+                .expect(405)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Method Not Allowed");
+                });
+            });
+          });
         });
       });
       describe("GET", () => {
