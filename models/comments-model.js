@@ -50,7 +50,8 @@ exports.removeComment = comment_id => {
     .from("comments")
     .where({ comment_id })
     .del()
-    .then(deleted_comment => {
-      return deleted_comment;
+    .then(deleted_count => {
+      if (deleted_count) return Promise.resolve();
+      else return Promise.reject({ status: 404, msg: "Comment Not Found" });
     });
 };
