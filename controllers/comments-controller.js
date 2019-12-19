@@ -1,5 +1,5 @@
 const {
-  saveArticleComment,
+  saveCommentByArticle,
   changeCommentVote,
   removeComment
 } = require("../models/comments-model");
@@ -8,7 +8,7 @@ exports.createArticleComment = (req, res, next) => {
   const { article_id } = req.params;
   const commentObj = req.body;
 
-  saveArticleComment(article_id, commentObj)
+  saveCommentByArticle(article_id, commentObj)
     .then(comment => {
       res.status(201).send({ comment });
     })

@@ -1,6 +1,6 @@
 const connection = require("../db/connection");
 
-exports.saveArticleComment = (article_id, comment) => {
+exports.saveCommentByArticle = (article_id, comment) => {
   const newComment = {
     author: comment.username,
     article_id,
@@ -10,8 +10,10 @@ exports.saveArticleComment = (article_id, comment) => {
     .insert(newComment)
     .into("comments")
     .returning("*")
-    .then(postedCommentArr => {
-      if (postedCommentArr) return postedCommentArr[0];
+    .then(([postedComment]) => {
+      if (!postedComment)
+        return Promise.reject({ status: 404, msg: "Article Not Found" });
+      else return postedComment;
     });
 };
 
