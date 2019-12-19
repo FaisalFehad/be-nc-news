@@ -31,3 +31,14 @@ exports.updateArticleVotes = (article_id, votesUpdate) => {
       else return Promise.reject({ status: 404, msg: "Article Not Found" });
     });
 };
+
+exports.checkArticleExistence = article_id => {
+  return connection
+    .select("*")
+    .from("articles")
+    .where({ article_id })
+    .then(([articleArr]) => {
+      if (!articleArr)
+        return Promise.reject({ status: 404, msg: "Article Not Found" });
+    });
+};
