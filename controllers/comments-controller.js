@@ -9,8 +9,8 @@ exports.createArticleComment = (req, res, next) => {
   const commentObj = req.body;
 
   saveArticleComment(article_id, commentObj)
-    .then(postedComment => {
-      res.status(201).send({ postedComment });
+    .then(comment => {
+      res.status(201).send({ comment });
     })
     .catch(next);
 };
@@ -20,8 +20,8 @@ exports.updateCommentVote = (req, res, next) => {
   const newVote = req.body;
 
   changeCommentVote(comment_id, newVote)
-    .then(updatedComment => {
-      res.status(201).send({ updatedComment });
+    .then(comment => {
+      res.status(201).send({ comment });
     })
     .catch(next);
 };

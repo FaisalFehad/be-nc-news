@@ -194,8 +194,8 @@ describe("nc-news", () => {
             .post("/api/articles/1/comments")
             .send({ username: "butter_bridge", body: "test comment" })
             .expect(201)
-            .then(({ body: { postedComment } }) => {
-              expect(postedComment).to.have.keys(
+            .then(({ body: { comment } }) => {
+              expect(comment).to.have.keys(
                 "comment_id",
                 "author",
                 "article_id",
@@ -203,10 +203,10 @@ describe("nc-news", () => {
                 "created_at",
                 "body"
               );
-              expect(postedComment.comment_id).to.equal(19);
-              expect(postedComment.author).to.equal("butter_bridge");
-              expect(postedComment.article_id).to.equal(1);
-              expect(postedComment.body).to.equal("test comment");
+              expect(comment.comment_id).to.equal(19);
+              expect(comment.author).to.equal("butter_bridge");
+              expect(comment.article_id).to.equal(1);
+              expect(comment.body).to.equal("test comment");
             });
         });
         describe("ERRORS", () => {
@@ -401,8 +401,8 @@ describe("nc-news", () => {
               .patch("/api/comments/1")
               .send({ inc_votes: 2 })
               .expect(201)
-              .then(({ body: { updatedComment } }) => {
-                expect(updatedComment.votes).to.equal(18);
+              .then(({ body: { comment } }) => {
+                expect(comment.votes).to.equal(18);
               });
           });
           it("STATUS 201: sends an object with the updated comment ", () => {
@@ -410,8 +410,8 @@ describe("nc-news", () => {
               .patch("/api/comments/1")
               .send({ inc_votes: 3 })
               .expect(201)
-              .then(({ body: { updatedComment } }) => {
-                expect(updatedComment).to.have.all.keys(
+              .then(({ body: { comment } }) => {
+                expect(comment).to.have.all.keys(
                   "comment_id",
                   "author",
                   "article_id",
