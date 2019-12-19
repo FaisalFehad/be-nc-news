@@ -421,8 +421,11 @@ describe("nc-news", () => {
                 );
               });
           });
+          it("STATUS 201: responds with unchanged comment object when no update is posted", () => {
+            return request.patch("/api/comments/1").expect(201);
+          });
           describe("ERRORS:", () => {
-            it("404: responds with Comment not found when the comment", () => {
+            it("STATUS 404: responds with Comment not found when the comment", () => {
               return request
                 .patch("/api/comments/999")
                 .send({ inc_votes: 3 })
@@ -431,7 +434,7 @@ describe("nc-news", () => {
                   expect(msg).to.equal("Comment Not Found");
                 });
             });
-            it("400: responds with bad request when the body object is miss formated", () => {
+            it("STATUS 400: responds with bad request when the body object is miss formated", () => {
               return request
                 .patch("/api/comments/1")
                 .send({ inc_votes: "should be a number" })
@@ -440,15 +443,7 @@ describe("nc-news", () => {
                   expect(msg).to.equal("Bad request");
                 });
             });
-            it("400: responds with bad request body object is missing", () => {
-              return request
-                .patch("/api/comments/1")
-                .expect(400)
-                .then(({ body: { msg } }) => {
-                  expect(msg).to.equal("Bad request");
-                });
-            });
-            it("400: responds with bad request to invalid comment id", () => {
+            it("STATUS 400: responds with bad request to invalid comment id", () => {
               return request
                 .patch("/api/comments/six")
                 .expect(400)
@@ -456,7 +451,7 @@ describe("nc-news", () => {
                   expect(msg).to.equal("Bad request");
                 });
             });
-            it("405: responds with Method Not Allowed to invalid requests", () => {
+            it("STATUS 405: responds with Method Not Allowed to invalid requests", () => {
               const invalidMethods = ["put", "delete", "patch"];
               const methodPromises = invalidMethods.map(method => {
                 return request[method]("/api/articles/1/comments")
