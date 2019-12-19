@@ -1,5 +1,9 @@
 const connection = require("../db/connection");
 
+exports.fetchAllArticles = () => {
+  return connection.select("*").from("articles");
+};
+
 exports.fetchArticleById = article_id => {
   return connection
     .select("articles.*")

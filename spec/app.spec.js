@@ -96,23 +96,55 @@ describe("nc-news", () => {
       });
     });
     describe("/articles", () => {
+      describe("/api/articles", () => {
+        describe("GET", () => {
+          it("STATUS 200: sends an array of all the articles", () => {
+            return request
+              .get("/api/articles")
+              .expect(200)
+              .then(({ body: { articles } }) => {
+                expect(articles).to.be.an("array");
+              });
+          });
+          it("STATUS 200: article item contains all article properties", () => {
+            return request
+              .get("/api/articles")
+              .expect(200)
+              .then(({ body: { articles } }) => {
+                articles.forEach(article => {
+                  expect(article).to.have.all.keys(
+                    "article_id",
+                    "title",
+                    "topic",
+                    "body",
+                    "votes",
+                    "author",
+                    "created_at"
+                  );
+                });
+              });
+          });
+        });
+      });
       describe("GET", () => {
-        it("STATUS 200: sends an article object with the following properties author, title, article_id, body, topic, created_at, votes, comment_count", () => {
-          return request
-            .get("/api/articles/1")
-            .expect(200)
-            .then(({ body: { article } }) => {
-              expect(article).to.have.keys(
-                "author",
-                "title",
-                "article_id",
-                "body",
-                "topic",
-                "created_at",
-                "votes",
-                "comment_count"
-              );
-            });
+        describe("/api/articles/:article_id", () => {
+          it("STATUS 200: sends an article object with the following properties author, title, article_id, body, topic, created_at, votes, comment_count", () => {
+            return request
+              .get("/api/articles/1")
+              .expect(200)
+              .then(({ body: { article } }) => {
+                expect(article).to.have.keys(
+                  "author",
+                  "title",
+                  "article_id",
+                  "body",
+                  "topic",
+                  "created_at",
+                  "votes",
+                  "comment_count"
+                );
+              });
+          });
         });
         describe("ERRORS", () => {
           it("STATUS 404: sends 404 when requested an article that dose not exist", () => {
