@@ -20,10 +20,6 @@ exports.handle500 = (err, req, res, next) => {
   res.status(500).send({ msg: "Server Error" });
 };
 
-exports.handle402 = (req, res, next) => {
-  res.status(402).send({ msg: "No Content" });
-};
-
 exports.handle405 = (req, res, next) => {
   res.status(405).send({ msg: "Method Not Allowed" });
 };
