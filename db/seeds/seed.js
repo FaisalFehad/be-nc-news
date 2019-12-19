@@ -4,15 +4,10 @@ const { formatDates, formatComments, makeRefObj } = require("../utils/utils");
 exports.seed = function(knex) {
   const topicsInsertions = knex("topics").insert(topics);
   const usersInsertions = knex("users").insert(users);
-
   return knex.migrate
     .rollback()
-    .then(() => {
-      return knex.migrate.latest();
-    })
-    .then(() => {
-      return Promise.all([topicsInsertions, usersInsertions]);
-    })
+    .then(() => knex.migrate.latest())
+    .then(() => Promise.all([topicsInsertions, usersInsertions]))
     .then(() => {
       const formatedArticles = formatDates(articles);
       return knex
