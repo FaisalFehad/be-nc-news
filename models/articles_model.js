@@ -24,15 +24,10 @@ exports.updateArticleVotes = (article_id, votesUpdate) => {
     .select("articles.*")
     .from("articles")
     .where("articles.article_id", "=", article_id)
+    .increment("votes", votesUpdate)
+    .returning("*")
     .then(([article]) => {
-      if (article) {
-        article.votes += votesUpdate;
-        return article;
-      } else {
-        return Promise.reject({
-          status: 404,
-          msg: "Article is not found"
-        });
-      }
+      if (article) return article;
+      else return Promise.reject({ status: 404, msg: "Article Not Found" });
     });
 };

@@ -172,7 +172,7 @@ describe("nc-news", () => {
               .send({ inc_votes: 6 })
               .expect(404)
               .then(({ body: { msg } }) => {
-                expect(msg).to.equal("Article is not found");
+                expect(msg).to.equal("Article Not Found");
               });
           });
           it("STATUS 400: sends bad request when invalid article_id", () => {
