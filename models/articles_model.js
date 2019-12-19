@@ -1,5 +1,4 @@
 const connection = require("../db/connection");
-const { handle402 } = require("../errors/index");
 
 exports.fetchArticleById = article_id => {
   return connection
