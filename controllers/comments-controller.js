@@ -30,7 +30,7 @@ exports.deleteComment = (req, res, next) => {
   const { comment_id } = req.params;
 
   removeComment(comment_id)
-    .then(deleted_count => {
+    .then(() => {
       res.sendStatus(204);
     })
     .catch(next);
