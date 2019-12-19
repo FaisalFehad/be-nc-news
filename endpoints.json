@@ -2,6 +2,35 @@
   "GET /api": {
     "description": "serves up a json representation of all the available endpoints of the api"
   },
+  "GET /api/users/:username": {
+    "description": "serves up a user object which should have the following properties, username, avatar_url, name",
+    "exampleResponse:": {
+      "username": "FaisalF",
+      "avatar_url": "url-to-some-image.com",
+      "name": "Faisal"
+    }
+  },
+  "GET /api/articles/:article_id": {
+    "description": "serves up an article object as requested by article_id",
+    "exampleResponse:": {
+      "author": "this is the username from the users table",
+      "title": "title of the article",
+      "article_id": "1",
+      "body": "fo bar.....",
+      "topic": "JS has a strong personality",
+      "created_at": "date-of-creation",
+      "votes": "a number represents the votes/thumps ups",
+      "comment_count": "a number of the comments on this article"
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "it expects a body object like { inc_votes: newVote } to increment or decrement the votes per article and responds with the updated article",
+    "expects": { "inc_votes": 1 },
+    "exampleResponse": {
+      "topics": [{ "slug": "football", "description": "Footie!" }]
+    }
+  },
+
   "GET /api/topics": {
     "description": "serves an array of all topics",
     "queries": [],
