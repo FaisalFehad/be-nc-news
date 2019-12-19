@@ -3,7 +3,7 @@ exports.formatDates = list => {
 
   list.forEach(item => {
     let objCopy = { ...item };
-    objCopy.created_at = new Date(ObjCopy.created_at);
+    objCopy.created_at = new Date(objCopy.created_at);
     result.push(objCopy);
   });
   return result;
