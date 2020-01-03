@@ -16,6 +16,7 @@ exports.handle422 = (err, req, res, next) => {
 };
 
 exports.handle500 = (err, req, res, next) => {
+  console.log(err); // do delete before deployment
   res.status(500).send({ msg: "Server Error" });
 };
 

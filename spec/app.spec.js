@@ -106,7 +106,7 @@ describe("nc-news", () => {
                 expect(articles).to.be.an("array");
               });
           });
-          it.only("STATUS 200: article item contains all article properties", () => {
+          it("STATUS 200: article item contains all article properties", () => {
             return request
               .get("/api/articles")
               .expect(200)
@@ -133,6 +133,70 @@ describe("nc-news", () => {
                 .then(({ body: { msg } }) => {
                   expect(msg).to.equal("Method Not Allowed");
                 });
+            });
+          });
+        });
+        describe("Queries", () => {
+          describe("Sort_by", () => {
+            describe("** default **", () => {
+              it("STATUS 400: by default, sends articles are sorted by created_at date", () => {
+                return request
+                  .get("/api/articles")
+                  .expect(200)
+                  .then(({ body: { articles } }) => {
+                    expect(articles).to.be.sortedBy("created_at", {
+                      descending: true
+                    });
+                  });
+              });
+            });
+            describe("article_id", () => {
+              it("STATUS 400: sends all articles sorted by article_id ", () => {
+                return request
+                  .get("/api/articles/?sort_by=article_id")
+                  .expect(200)
+                  .then(({ body: { articles } }) => {
+                    expect(articles).to.be.sortedBy("article_id", {
+                      descending: true
+                    });
+                  });
+              });
+            });
+            describe("comment_count", () => {
+              it("STATUS 400: sends all articles sorted by comment_count ", () => {
+                return request
+                  .get("/api/articles/?sort_by=comment_count")
+                  .expect(200)
+                  .then(({ body: { articles } }) => {
+                    const last_article = articles[articles.length - 1];
+                    expect(articles[0].comment_count).to.equal("13");
+                    expect(last_article.comment_count).to.equal("0");
+                  });
+              });
+            });
+            describe("votes", () => {
+              it("STATUS 400: sends all articles sorted by votes", () => {
+                return request
+                  .get("/api/articles/?sort_by=votes")
+                  .expect(200)
+                  .then(({ body: { articles } }) => {
+                    expect(articles).to.be.sortedBy("votes", {
+                      descending: true
+                    });
+                  });
+              });
+            });
+            describe("created_at", () => {
+              it("STATUS 400: sends all articles sorted by created_at ", () => {
+                return request
+                  .get("/api/articles/?sort_by=created_at")
+                  .expect(200)
+                  .then(({ body: { articles } }) => {
+                    expect(articles).to.be.sortedBy("created_at", {
+                      descending: true
+                    });
+                  });
+              });
             });
           });
         });

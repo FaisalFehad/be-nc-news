@@ -2,7 +2,7 @@ const connection = require("../db/connection");
 
 exports.fetchAllArticles = (
   sort_by = "created_at",
-  order = "asc",
+  order = "desc",
   author,
   topic
 ) => {
@@ -10,7 +10,6 @@ exports.fetchAllArticles = (
     .select("articles.*")
     .from("articles")
     .leftJoin("comments", "articles.article_id", "comments.article_id")
-
     .orderBy(sort_by, order)
     .groupBy("articles.article_id")
     .count("comment_id as comment_count")
