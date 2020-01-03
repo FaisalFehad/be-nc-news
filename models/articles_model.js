@@ -1,7 +1,23 @@
 const connection = require("../db/connection");
 
-exports.fetchAllArticles = () => {
-  return connection.select("*").from("articles");
+exports.fetchAllArticles = (
+  sort_by = "created_at",
+  order = "asc",
+  author,
+  topic
+) => {
+  return connection
+    .select("articles.*")
+    .from("articles")
+    .leftJoin("comments", "articles.article_id", "comments.article_id")
+
+    .orderBy(sort_by, order)
+    .groupBy("articles.article_id")
+    .count("comment_id as comment_count")
+    .modify(query => {
+      if (author) query.where("articles.author", author);
+      if (topic) query.where({ topic });
+    });
 };
 
 exports.fetchArticleById = article_id => {

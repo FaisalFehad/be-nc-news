@@ -106,7 +106,7 @@ describe("nc-news", () => {
                 expect(articles).to.be.an("array");
               });
           });
-          it("STATUS 200: article item contains all article properties", () => {
+          it.only("STATUS 200: article item contains all article properties", () => {
             return request
               .get("/api/articles")
               .expect(200)
@@ -119,7 +119,8 @@ describe("nc-news", () => {
                     "body",
                     "votes",
                     "author",
-                    "created_at"
+                    "created_at",
+                    "comment_count"
                   );
                 });
               });
