@@ -457,8 +457,8 @@ describe("nc-news", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body }) => {
-              expect(body).to.be.an("array");
-              expect(body[0]).to.have.all.keys(
+              expect(body.comments).to.be.an("array");
+              expect(body.comments[0]).to.have.all.keys(
                 "comment_id",
                 "votes",
                 "created_at",

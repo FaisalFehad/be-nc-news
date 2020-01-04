@@ -44,7 +44,7 @@ exports.getCommentsByArticleId = (req, res, next) => {
     checkArticleExistence(article_id)
   ])
     .then(([comments]) => {
-      res.status(200).send(comments);
+      res.status(200).send({ comments });
     })
     .catch(next);
 };
