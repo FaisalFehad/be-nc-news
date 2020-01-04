@@ -381,6 +381,15 @@ describe("nc-news", () => {
             });
         });
         describe("ERRORS", () => {
+          it("STATUS 400: responds to invalid query with colum that dose not exist", () => {
+            return request
+              .get("/api/articles/1/comments?sort_by=not-a-valid-column")
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
+
           it("STATUS 404: responds with article not found when the article dose not exist", () => {
             return request
               .get("/api/articles/999/comments")
