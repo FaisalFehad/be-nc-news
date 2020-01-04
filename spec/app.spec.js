@@ -229,6 +229,13 @@ describe("nc-news", () => {
                 });
             });
           });
+          describe("Invalid query", () => {
+            it("123", () => {
+              return request
+                .get("/api/articles?sort_by=not-a-column")
+                .expect(400);
+            });
+          });
         });
       });
       describe("GET", () => {
