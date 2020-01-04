@@ -13,7 +13,7 @@
     "test": "mocha spec/app.spec.js",
     "migrate-make": "knex migrate:make",
     "migrate-latest": "knex migrate:latest",
-    "start": "node listen"
+    "start": "node listen.js"
   },
   "repository": {
     "type": "git",
