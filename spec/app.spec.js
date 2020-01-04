@@ -139,7 +139,7 @@ describe("nc-news", () => {
         describe("Queries", () => {
           describe("Sort_by", () => {
             describe("** default **", () => {
-              it("STATUS 400: by default, sends articles are sorted by created_at date", () => {
+              it("STATUS 200: by default, sends articles are sorted by created_at date", () => {
                 return request
                   .get("/api/articles")
                   .expect(200)
@@ -151,7 +151,7 @@ describe("nc-news", () => {
               });
             });
             describe("article_id", () => {
-              it("STATUS 400: sends all articles sorted by article_id ", () => {
+              it("STATUS 200: sends all articles sorted by article_id ", () => {
                 return request
                   .get("/api/articles/?sort_by=article_id")
                   .expect(200)
@@ -163,7 +163,7 @@ describe("nc-news", () => {
               });
             });
             describe("comment_count", () => {
-              it("STATUS 400: sends all articles sorted by comment_count ", () => {
+              it("STATUS 200: sends all articles sorted by comment_count ", () => {
                 return request
                   .get("/api/articles/?sort_by=comment_count")
                   .expect(200)
@@ -175,7 +175,7 @@ describe("nc-news", () => {
               });
             });
             describe("votes", () => {
-              it("STATUS 400: sends all articles sorted by votes", () => {
+              it("STATUS 200: sends all articles sorted by votes", () => {
                 return request
                   .get("/api/articles/?sort_by=votes")
                   .expect(200)
@@ -187,7 +187,7 @@ describe("nc-news", () => {
               });
             });
             describe("created_at", () => {
-              it("STATUS 400: sends all articles sorted by created_at ", () => {
+              it("STATUS 200: sends all articles sorted by created_at ", () => {
                 return request
                   .get("/api/articles/?sort_by=created_at")
                   .expect(200)
