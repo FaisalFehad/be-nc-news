@@ -338,6 +338,23 @@ describe("nc-news", () => {
                 expect(msg).to.equal("Bad request");
               });
           });
+          it("STATUS 405: sends Method Not Allowed for invalid patch request", () => {
+            return request
+              .patch("/api/articles")
+              .expect(405)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Method Not Allowed");
+              });
+          });
+          it("STATUS 400: responds to invalid inc_votes", () => {
+            return request
+              .patch("/api/articles/1")
+              .send({ inc_votes: "one" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
         });
       });
     });
