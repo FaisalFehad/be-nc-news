@@ -499,6 +499,15 @@ describe("nc-news", () => {
             });
         });
         describe("Invalid requests", () => {
+          it("STATUS 400: responds to bad patch methods", () => {
+            return request
+              .post("/api/articles/1/comments")
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
+
           it("STATUS 404: responds with article not found", () => {
             return request
               .get("/api/articles/999/comments")
