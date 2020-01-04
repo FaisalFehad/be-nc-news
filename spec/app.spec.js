@@ -199,6 +199,36 @@ describe("nc-news", () => {
               });
             });
           });
+          describe("order", () => {
+            it("STATUS 200: by default, sends articles in descending order by article_id", () => {
+              return request
+                .get("/api/articles/")
+                .expect(200)
+                .then(({ body: { articles } }) => {
+                  expect(articles).to.be.sortedBy("article_id");
+                });
+            });
+            it("STATUS 200: sends articles in ascending order", () => {
+              return request
+                .get("/api/articles/?order=asc")
+                .expect(200)
+                .then(({ body: { articles } }) => {
+                  expect(articles).to.be.sortedBy("article_id", {
+                    descending: true
+                  });
+                });
+            });
+          });
+          describe("topic", () => {
+            it("STATUS 200: sends articles by specific topic", () => {
+              return request
+                .get("/api/articles/?topic=cats")
+                .expect(200)
+                .then(({ body: { articles } }) => {
+                  expect(articles[0].topic).to.equal("cats");
+                });
+            });
+          });
         });
       });
       describe("GET", () => {
