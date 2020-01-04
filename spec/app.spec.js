@@ -472,7 +472,7 @@ describe("nc-news", () => {
             .get("/api/articles/1/comments")
             .expect(200)
             .then(({ body }) => {
-              expect(body[0]).to.have.all.keys(
+              expect(body.comments[0]).to.have.all.keys(
                 "comment_id",
                 "votes",
                 "created_at",
@@ -486,7 +486,7 @@ describe("nc-news", () => {
             .get("/api/articles/2/comments")
             .expect(200)
             .then(({ body }) => {
-              expect(body.length).to.equal(0);
+              expect(body.comments.length).to.equal(0);
             });
         });
         describe("Invalid requests", () => {
@@ -517,7 +517,7 @@ describe("nc-news", () => {
                   .get("/api/articles/1/comments?sort_by=votes")
                   .expect(200)
                   .then(({ body }) => {
-                    expect(body).to.be.descendingBy("votes");
+                    expect(body.comments).to.be.descendingBy("votes");
                   });
               });
               it("STATUS 200: comments are sorted by votes when passed votes in sort_by query", () => {
@@ -525,7 +525,7 @@ describe("nc-news", () => {
                   .get("/api/articles/1/comments?sort_by=votes")
                   .expect(200)
                   .then(({ body }) => {
-                    expect(body).to.be.descendingBy("votes");
+                    expect(body.comments).to.be.descendingBy("votes");
                   });
               });
               it("STATUS 200: comments are sorted by comment_id when passed comment_id in sort_by query", () => {
@@ -533,7 +533,7 @@ describe("nc-news", () => {
                   .get("/api/articles/1/comments?sort_by=comment_id")
                   .expect(200)
                   .then(({ body }) => {
-                    expect(body).to.be.descendingBy("comment_id");
+                    expect(body.comments).to.be.descendingBy("comment_id");
                   });
               });
             });
@@ -545,7 +545,7 @@ describe("nc-news", () => {
                   .get("/api/articles/1/comments")
                   .expect(200)
                   .then(({ body }) => {
-                    expect(body).to.be.descendingBy("created_at");
+                    expect(body.comments).to.be.descendingBy("created_at");
                   });
               });
               it("STATUS 200: sends an array of comments sorted in ascending order when passed asc in order query", () => {
@@ -553,7 +553,7 @@ describe("nc-news", () => {
                   .get("/api/articles/1/comments?order=acs")
                   .expect(200)
                   .then(({ body }) => {
-                    expect(body).to.be.ascendingBy("created_at");
+                    expect(body.comments).to.be.ascendingBy("created_at");
                   });
               });
             });
