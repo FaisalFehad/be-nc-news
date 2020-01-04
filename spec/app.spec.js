@@ -230,10 +230,20 @@ describe("nc-news", () => {
             });
           });
           describe("Invalid query", () => {
-            it("123", () => {
+            it("STATUS 400: with invalid sort by query", () => {
               return request
                 .get("/api/articles?sort_by=not-a-column")
                 .expect(400);
+            });
+            it("STATUS 200: with invalid sort by order", () => {
+              return request
+                .get("/api/articles?order=not-asc-or-desc")
+                .expect(200);
+            });
+            it("STATUS 400: with invalid sort by order", () => {
+              return request
+                .get("/api/articles?order=not-asc-or-desc")
+                .expect(200);
             });
           });
         });
