@@ -9,6 +9,7 @@ const {
   handle422,
   handle500
 } = require("./errors/index");
+app.use(express.static(path.join(__dirname, "build")));
 
 app.use(cors());
 app.use(express.json());
